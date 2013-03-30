@@ -33,9 +33,9 @@ public class Product {
     @XmlElement(name = "prodexist")
     private Boolean prodExist;
     @XmlElement(name = "catid")
-    private Category catID;
+    private Integer catID;
     @XmlElement(name = "makid")
-    private Maker makID;
+    private Integer makID;
 
     public Product() {
     }
@@ -99,19 +99,19 @@ public class Product {
         this.prodExist = prodExist;
     }
 
-    public Category getCatID() {
+    public Integer getCatID() {
         return catID;
     }
 
-    public void setCatID(Category catID) {
+    public void setCatID(Integer catID) {
         this.catID = catID;
     }
 
-    public Maker getMakID() {
+    public Integer getMakID() {
         return makID;
     }
 
-    public void setMakID(Maker makID) {
+    public void setMakID(Integer makID) {
         this.makID = makID;
     }
 
