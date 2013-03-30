@@ -28,7 +28,7 @@ public class Category {
     @XmlElement(name = "category")
     private List<Category> categoryList;
     @XmlElement(name="parentcatid")
-    private Category parentCatID;
+    private int parentCatID;
     @XmlElementWrapper(name = "products")
     @XmlElement(name = "product")
     private List<Product> productsList;
@@ -69,11 +69,11 @@ public class Category {
         this.categoryList = categoryList;
     }
 
-    public Category getParentCatID() {
+    public int getParentCatID() {
         return parentCatID;
     }
 
-    public void setParentCatID(Category parentCatID) {
+    public void setParentCatID(int parentCatID) {
         this.parentCatID = parentCatID;
     }
 
