@@ -137,7 +137,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "com.pb.shop.model.Products[ prodID=" + prodID + " ]";
+        return prodName;
     }
     
 }

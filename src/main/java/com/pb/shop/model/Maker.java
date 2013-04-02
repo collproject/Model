@@ -96,7 +96,7 @@ public class Maker {
 
     @Override
     public String toString() {
-        return "com.pb.shop.model.Maker[ makID=" + makID + " ]";
+        return makName;
     }
     
 }
