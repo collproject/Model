@@ -12,16 +12,18 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  *
- * @author Дмитрий
+ * @author Madness
  */
-
 @XmlType
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name="exception")
-public class UserException {
+@XmlRootElement(name="goodMessage")
+public class UserGoodMessage {
 
     @XmlElement(name="message")
     private String message;
+
+    public UserGoodMessage() {
+    }
 
     public void setMessage(String message) {
         this.message = message;
