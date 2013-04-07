@@ -107,7 +107,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "com.pb.shop.model.Category[ catID=" + catID + " ]";
+        return catName;
     }
     
 }
