@@ -4,4 +4,5 @@ MakersList
 Product
 ProductsList
 CategoryList
-UserException
+UserBadMessage
+UserGoodMessage
