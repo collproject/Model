@@ -195,17 +195,6 @@ public class Client {
             throw new GeneralException(ex);
         } catch (JAXBException ex) {
             throw new GeneralException(ex);
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            } catch (IOException ex) {
-                throw new GeneralException(ex);
-            }
         }
     }
 
