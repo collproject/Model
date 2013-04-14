@@ -25,6 +25,10 @@ public class UserGoodMessage {
     public UserGoodMessage() {
     }
 
+    public UserGoodMessage(String message) {
+        this.message = message;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }

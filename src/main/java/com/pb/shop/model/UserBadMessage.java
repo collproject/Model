@@ -26,6 +26,10 @@ public class UserBadMessage {
     public UserBadMessage() {
     }
 
+    public UserBadMessage(String message) {
+        this.message = message;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }
