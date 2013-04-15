@@ -14,6 +14,7 @@ import com.pb.shop.model.Product;
 import com.pb.shop.model.ProductsList;
 import com.pb.shop.model.UserBadMessage;
 import com.pb.shop.model.UserGoodMessage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -83,9 +84,18 @@ public class Client {
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
+            connection.setDoOutput(true);  
+            connection.setRequestMethod("POST");  
+            connection.setRequestProperty("Content-type", "text/xml");
 
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            context.createMarshaller().marshal(xmlObj, bout);
+            
+            byte[] data = bout.toByteArray();
             OutputStream os = connection.getOutputStream();
-            context.createMarshaller().marshal(xmlObj, os);
+            os.write(data);
+            os.flush();
+            
 
             connection.connect();
             InputStream is = connection.getInputStream();
