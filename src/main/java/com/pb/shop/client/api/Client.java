@@ -125,7 +125,7 @@ public class Client {
     }
 
     public List<Category> getAllCategories() throws GeneralException, ServiceException {
-        return ((CategoryList) executeService("/categoryes/")).getCategoryes();
+        return ((CategoryList) executeService("/categories/")).getCategoryes();
     }
 
     public UserGoodMessage addCategory(Category category) throws ServiceException, GeneralException {
