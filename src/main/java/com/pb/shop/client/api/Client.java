@@ -66,7 +66,7 @@ public class Client {
         } catch (JAXBException ex) {
             throw new GeneralException(ex);
         }
-        
+
         if (response instanceof UserBadMessage) {
             throw new ServiceException((UserBadMessage) response);
         }
@@ -84,18 +84,18 @@ public class Client {
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
-            connection.setDoOutput(true);  
-            connection.setRequestMethod("POST");  
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-type", "text/xml");
 
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
             context.createMarshaller().marshal(xmlObj, bout);
-            
+
             byte[] data = bout.toByteArray();
             OutputStream os = connection.getOutputStream();
             os.write(data);
             os.flush();
-            
+
 
             connection.connect();
             InputStream is = connection.getInputStream();
@@ -119,13 +119,69 @@ public class Client {
     public List<Product> getAllProducts() throws GeneralException, ServiceException {
         return ((ProductsList) executeService("/products/")).getProducts();
     }
+    /**
+     * Для получения списка товаров по заданным характеристикам
+     * Допускаются null значения
+     * @param catId ИН категории
+     * @param mkId ИН производителя
+     * @param name название товара, допускается часть названия
+     * @param fromPrice цена от
+     * @param toPrice цена до
+     * @return Список товаров соответствующие данным критериям
+     * @throws GeneralException
+     * @throws ServiceException 
+     */
+    public List<Product> getProducts(String catId, String mkId,
+            String name, String fromPrice, String toPrice) throws GeneralException, ServiceException {
+        String param = "";
+
+        if (catId != null) {
+            if (!catId.equals("")) {
+                param += "catId=" + catId + "&";
+            }
+        }
+
+        if (mkId != null) {
+            if (!mkId.equals("")) {
+                param += "mkId=" + mkId + "&";
+            }
+        }
+
+        if (name != null) {
+            if (!name.equals("")) {
+                param += "name=" + name + "&";
+            }
+        }
+
+        if (fromPrice != null) {
+            if (!fromPrice.equals("")) {
+                param += "fromPrice=" + fromPrice + "&";
+            }
+        }
+        
+        if (toPrice != null) {
+            if (!toPrice.equals("")) {
+                param += "toPrice=" + toPrice + "&";
+            }
+        }
+        
+        return ((ProductsList) executeService("/products/params?" + param)).getProducts();
+    }
 
     public List<Maker> getAllMakers() throws GeneralException, ServiceException {
         return ((MakersList) executeService("/makers/")).getMakers();
     }
 
+    public Maker getMakerById(int id) throws GeneralException, ServiceException {
+        return (Maker) executeService("/maker/by/id/" + id);
+    }
+
     public List<Category> getAllCategories() throws GeneralException, ServiceException {
         return ((CategoryList) executeService("/categories/")).getCategoryes();
+    }
+
+    public Category getCategoryById(int id) throws GeneralException, ServiceException {
+        return (Category) executeService("/category/by/id/" + id);
     }
 
     public UserGoodMessage addCategory(Category category) throws ServiceException, GeneralException {
@@ -164,6 +220,14 @@ public class Client {
         return (UserGoodMessage) executeService("/delete/maker/by/id/" + id);
     }
 
+    public String getUrlProductImage(int productId) {
+        return baseUrl + "/image/" + productId + ".jpg";
+    }
+
+    public UserGoodMessage delProductImage(int id) throws GeneralException, ServiceException {
+        return (UserGoodMessage) executeService("/delete/image/" + id);
+    }
+
     public UserGoodMessage uploadProductImage(String imageId, String imageFileName) throws GeneralException, ServiceException {
 
         InputStream is = null;
@@ -194,13 +258,14 @@ public class Client {
 
             //Получаем ответ от сервера
             is = httpConnection.getInputStream();
-            
+
             Object response = context.createUnmarshaller().unmarshal(is);
-            
-            if(response instanceof UserBadMessage)
+
+            if (response instanceof UserBadMessage) {
                 throw new ServiceException((UserBadMessage) response);
-            
-            return (UserGoodMessage) response; 
+            }
+
+            return (UserGoodMessage) response;
         } catch (IOException ex) {
             throw new GeneralException(ex);
         } catch (JAXBException ex) {
