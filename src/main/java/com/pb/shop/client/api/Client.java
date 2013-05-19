@@ -20,11 +20,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import org.apache.commons.codec.binary.Base64;
@@ -149,7 +153,11 @@ public class Client {
 
         if (name != null) {
             if (!name.equals("")) {
-                param += "name=" + name + "&";
+                try {
+                    param += "name=" + URLEncoder.encode(name, "utf-8") + "&";
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
